@@ -1,10 +1,10 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 module.exports = {
-  entry: "./src/index.ts",
+  entry: "./src/js/index.ts",
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'my-first-webpack.bundle.js'
+    filename: 'ersaplayer.js'
   },
   devServer: {
     contentBase: './dist',
@@ -37,11 +37,32 @@ module.exports = {
         loaders: ["babel-loader", "ts-loader"]
       },
       {
+        test: /\.(gif|jpg|jpeg|png|svg)$/,
+        use: [{
+          loader: 'url-loader',
+          options: {
+            limit: 1024,
+            name: '[name]-robin.[ext]'
+          }
+        }]
+      },
+      {
+        test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+        loader: 'url-loader'
+      },
+      {
         test: /\.less$/,
         use: [
           MiniCssExtractPlugin.loader,
           { loader: "css-loader" },
           { loader: "less-loader" }
+        ]
+      },
+      {
+        test: /\.css$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          { loader: "css-loader" },
         ]
       },
     ]
